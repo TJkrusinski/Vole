@@ -1,0 +1,27 @@
+{
+  "name": "vole",
+  "version": "0.0.0",
+  "description": "A dead simple Redis backed key/val cache",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/ --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shoflo/vole"
+  },
+  "keywords": [
+    "cache",
+    "redis",
+    "key",
+    "value"
+  ],
+  "author": "TJ Krusinski",
+  "license": "BSD",
+  "dependencies": {
+    "chai": "~1.6.0",
+    "redis": "~0.8.3",
+    "cli-color": "~0.2.2",
+    "winston": "~0.7.1"
+  }
+}
