@@ -4,9 +4,13 @@
 
 A very simple Redis backed key/value cache for Node.js.
 
+`$ npm install vole`
+
 ## Methods
 
 ````javascript
+
+var vole = require('vole');
 
 /**
  *	Connect Vole to Redis
