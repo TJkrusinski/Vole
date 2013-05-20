@@ -36,6 +36,14 @@ vole.on('error', function(e){
 
 
 /**
+ *	Set the default TTL for all of Vole
+ *	@param {Number} ttl - TTL in seconds
+ *		default TTL is one hour
+ */
+vole.setTTL(ttl);
+
+
+/**
  *	Set data into Vole
  *	@param {String} key - the key name in which to save the data
  *		Vole is a thin wrapper around Redis,
