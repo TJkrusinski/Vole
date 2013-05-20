@@ -80,6 +80,8 @@ exports.connect = function(port, host) {
 	client.on('error', function(e){
 		exports.emit('error', e);
 	});
+
+	return exports;
 };
 
 /**

@@ -110,7 +110,7 @@ vole.disableConsoleLogging();
 
 ````javascript
 
-var vole = require('vole');
+var vole = require('vole').connect();
 
 /**
  *	Use vole in front of your database to speed things up
