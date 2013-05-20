@@ -9,6 +9,29 @@ A very simple Redis backed key/value cache for Node.js.
 ````javascript
 
 /**
+ *	Connect Vole to Redis
+ *	These parameters are the same as the Redis module for node
+ *	They will default to 6379 and localhost (default for redis)
+ */
+vole.connect([port], [host]);
+
+
+/**
+ *	Your Redis instance is behind auth
+ *	Callback is fired when the connection is established
+ */
+vole.auth(pass, [cb]);
+
+
+/**
+ *	Listen for errors, these errors are coming from Redis' event emitter
+ */
+vole.on('error', function(e){
+	console.log(e);
+});
+
+
+/**
  *	Set data into Vole
  *	@param {String} key - the key name in which to save the data
  *		Vole is a thin wrapper around Redis,
@@ -114,6 +137,12 @@ User.create = function(userObject, callback) {
 };
 
 ````
+## Running tests
+
+`$ npm test`
+
+The tests require [mocha](https://github.com/visionmedia/mocha) and assume that you have Redis running on `127.0.0.1:6379`
+
 ## License
 
 (The MIT License)
