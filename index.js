@@ -81,6 +81,13 @@ exports.connect = function(port, host) {
 		exports.emit('error', e);
 	});
 
+	/**
+	 *	Tell the client that vole is connected
+	 */
+	client.on('connect', function(e){
+		exports.emit('connect', e);
+	});
+
 	return exports;
 };
 
@@ -90,6 +97,7 @@ exports.connect = function(port, host) {
  */
 exports.setTTL = function(ttl) {
 	EXPIRE = ttl || EXPIRE;
+	return EXPIRE;
 };
 
 /**
@@ -135,7 +143,7 @@ exports.set = function(key, val, ttl, cb) {
 
 	client.set(key, toString(val), function(err){
 		if (err) return cb ? cb(true, null) : false;
-		return cb ? cb(false, null) : false;
+		return cb ? cb(false, null) : true;
 	});
 
 	client.expire(key, usettl ? ttl : EXPIRE);
