@@ -19,6 +19,24 @@ describe('vole', function(){
 		});
 	});
 
+	vole.on('hit', function(key, val){
+		describe('vole#on(\'hit\')', function(){
+			it('is fired after the cache is hit', function(d){
+				assert.ok(key);
+				d();
+			});
+		});
+	});
+
+	vole.on('miss', function(key, val){
+		describe('vole#on(\'hit\')', function(){
+			it('is fired after the cache is missed', function(d){
+				assert.ok(key);
+				d();
+			});
+		});
+	});
+
 	// connection
 	describe('vole#connect()', function(){
 		it('connects to the redis server', function(d){

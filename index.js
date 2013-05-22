@@ -143,6 +143,7 @@ exports.set = function(key, val, ttl, cb) {
 
 	client.set(key, toString(val), function(err){
 		if (err) return cb ? cb(true, null) : false;
+		if (!err) exports.emit('set', key, toString(val));
 		return cb ? cb(false, null) : true;
 	});
 
@@ -201,9 +202,11 @@ var multiGet = function(key, cb) {
 var returnData = function(key, val, cb) {
 	if (val) {
 		logging.cacheHit(key, val);	
+		exports.emit('hit', key, val);
 		return cb(false, toObj(val));
 	} else {
 		logging.cacheMiss(key);
+		exports.emit('miss', key);
 		return cb(false, null);
 	};
 };
@@ -225,10 +228,11 @@ var returnDataMulti = function(key, val, cb) {
 			if (!parsed) missing.push(key[i]);
 			val[i] = parsed;
 		});
-
+		exports.emit('hit', key, val);
 		return cb(false, val, missing);
 	} else {
 		cacheMiss(key);
+		exports.emit('miss', key);
 		return cb(false, null);
 	};
 };
