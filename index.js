@@ -138,8 +138,8 @@ exports.set = function(key, val, ttl, cb) {
 	/**
 	 *	`val` must be Object
 	 */
-	if (type(val) !== 'Object')
-		return cb ? cb(true, 'Val must be an object') : false;
+	if (type(val) !== 'Object' || type(val) !== 'Array')
+		return cb ? cb(true, 'Val must be an object or an array') : false;
 
 	client.set(key, toString(val), function(err){
 		if (err) return cb ? cb(true, null) : false;

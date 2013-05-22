@@ -5,6 +5,7 @@ var assert = require('chai').assert,
 
 describe('vole', function(){
 	vole.logToFile(__dirname+'/test.json');
+	vole.enableConsoleLogging();
 
 	// existance
 	describe('the existance of vole', function(){
