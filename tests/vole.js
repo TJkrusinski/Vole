@@ -47,6 +47,15 @@ describe('vole', function(){
 	});
 
 	describe('vole#set()', function(){
+		it('sets data into vole with the default ttl', function(d){
+			vole.set('fooarray', [{foo:'bar'}], function(err){
+				assert.isFalse(err);
+				d();
+			});
+		});
+	});
+
+	describe('vole#set()', function(){
 		it('sets data into vole with a different ttl', function(d){
 			vole.set('foo2', {foo:'bar'}, 1, function(err){
 				assert.isFalse(err);
