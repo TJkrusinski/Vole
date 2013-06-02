@@ -14,7 +14,8 @@
     "cache",
     "redis",
     "key",
-    "value"
+    "value",
+	"string"
   ],
   "author": "TJ Krusinski",
   "license": "BSD",
