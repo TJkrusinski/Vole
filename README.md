@@ -1,5 +1,7 @@
 # Vole
 
+[![Build Status](https://secure.travis-ci.org/tjkrusinski/vole.png)](http://travis-ci.org/tjkrusinski/vole)
+
 [A Vole](http://en.wikipedia.org/wiki/Vole)
 
 A very simple Redis backed key/value cache for Node.js.
