@@ -1,6 +1,6 @@
 # Vole
 
-[![Build Status](https://secure.travis-ci.org/tjkrusinski/vole.png)](http://travis-ci.org/tjkrusinski/vole)
+[![Build Status](https://travis-ci.org/TJkrusinski/Vole.png)](https://travis-ci.org/TJkrusinski/Vole)
 
 [A Vole](http://en.wikipedia.org/wiki/Vole)
 
