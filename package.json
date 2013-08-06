@@ -1,6 +1,6 @@
 {
   "name": "vole",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A dead simple Redis backed key/val cache",
   "main": "./index.js",
   "scripts": {

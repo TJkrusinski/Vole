@@ -64,8 +64,19 @@ exports.logToFile = logging.logToFile;
  *	@param {String} port
  *	@param {String}	host
  */
-exports.connect = function(port, host) {
-	client = redis.createClient(port, host);
+exports.connect = function(port, host, opts) {
+	
+	if (typeof port == 'object') {
+		opts = port;
+		port = null;
+	};
+
+	if (typeof host == 'object') {
+		opts = host;
+		host = null;
+	};
+
+	client = redis.createClient(port, host, opts);
 
 	/**
 	 *	Tell the client that redis is connected
@@ -86,6 +97,13 @@ exports.connect = function(port, host) {
 	 */
 	client.on('connect', function(e){
 		exports.emit('connect', e);
+	});
+	
+	/**
+	 *	When the connection closes, tell someone
+	 */
+	client.on('end', function(e){
+		exports.emit('end', e);
 	});
 
 	return exports;
@@ -166,11 +184,14 @@ exports.get = function(key, cb) {
 /**
  *	Bust the cache for a given key
  *	@method bust
- *	@param {String} key
+ *	@param {String || Array} key
+ *	@param {Function} cb
  */
-exports.bust = function(key) {
-	client.del(key);
+exports.bust = function(key, cb) {
+	key = key instanceof Array ? key : [key];
+	client.send_command('DEL', key, cb);
 };
+
 
 /**
  *	Get a single key

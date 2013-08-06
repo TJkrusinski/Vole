@@ -8,9 +8,9 @@ A very simple Redis backed key/value cache for Node.js.
 
 `$ npm install vole`
 
-## Methods
+## API
 
-````javascript
+```
 
 var vole = require('vole');
 
@@ -18,8 +18,9 @@ var vole = require('vole');
  *	Connect Vole to Redis
  *	These parameters are the same as the Redis module for node
  *	They will default to 6379 and localhost (default for redis)
+ *	If you want to use options, you must include a port and host
  */
-vole.connect([port], [host]);
+vole.connect([port], [host], [options]);
 
 
 /**
@@ -106,11 +107,36 @@ vole.enableConsoleLogging();
  */
 vole.disableConsoleLogging();
 
-````
+```
+## Connecting to Redis
+
+### vole.connect(port, host, options)
+
+Using Vole to connect to Redis is the same as using [node-redis](https://github.com/mranney/node_redis). To learn about what options are available [see the node redis module](https://github.com/mranney/node_redis#rediscreateclientport-host-options).
+
+## Events
+
+After you attempt to connect to Vole, it will be emitting events.
+
+### "ready"
+
+The server reported that it is ready to receive commands.
+
+### "connect"
+
+Emitted when the connection is opened and vole is ready to recieve commands.
+
+### "error"
+
+Will be emitted when the client had an error connecting to Redis.
+
+### "end"
+
+Emitted when a connection to Redis has closed.
 
 ## Examples
 
-````javascript
+```
 
 var vole = require('vole').connect();
 
@@ -150,7 +176,7 @@ User.create = function(userObject, callback) {
 	});
 };
 
-````
+```
 ## Running tests
 
 `$ npm test`

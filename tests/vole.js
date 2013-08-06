@@ -195,4 +195,41 @@ describe('vole', function(){
 		});
 	});
 
+	// delete an array of keys
+	describe('vole#del()', function(){
+		it('removes an array of keys', function(d){
+			vole.set('foo8', ['boo'], function(err, data){
+				vole.set('foo9', ['boo'], function(err, data){
+					vole.bust(['foo8', 'foo9'], function(err, data){
+						vole.get(['foo8', 'foo9'], function(err, data){
+							assert.isFalse(err);
+							assert.isNull(data[0]);
+							assert.isNull(data[1]);
+							d();
+						});
+					});
+				});
+			});
+		});
+	});
+
+	// delete an array of keys
+	describe('vole#del()', function(){
+		it('removes an array of keys without cb', function(d){
+			vole.set('foo5', ['boo'], function(err, data){
+				vole.set('foo5', ['boo'], function(err, data){
+					vole.bust(['foo5', 'foo6']);
+					setTimeout(function(){
+						vole.get(['foo5', 'foo6'], function(err, data){
+							assert.isFalse(err);
+							assert.isNull(data[0]);
+							assert.isNull(data[1]);
+							d();
+						});
+					}, 50);
+				});
+			});
+		});
+	});
+
 });
