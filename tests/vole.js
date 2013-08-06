@@ -232,4 +232,39 @@ describe('vole', function(){
 		});
 	});
 
+	describe('vole#set()', function(){
+		it('does not set an expire on a key', function(d){
+			vole.set('foobarbz', ['Stephen Rivas'], 0, function(err, data){
+				assert.isFalse(err);
+				d();
+			});
+		});
+	});
+
+	describe('vole#set()', function(){
+		it('sets a key with an EXPIRE of 0 and a ttl of 0', function(d){
+			vole.setTTL(0);
+			vole.set('foobarbzzz', ['Stephen Rivas'], 0, function(err, data){
+				vole.get('foobarbzzz', function(err, data){
+					assert.isFalse(err);
+					assert.ok(data);
+					d();
+				});
+			});
+		});
+	});
+
+	describe('vole#set()', function(){
+		it('sets a key with an EXPIRE of 0 and a ttl of 0', function(d){
+			vole.setTTL(100);
+			vole.set('foobarbzzzss', ['Stephen Rivas'], function(err, data){
+				vole.get('foobarbzzzss', function(err, data){
+					assert.isFalse(err);
+					assert.ok(data);
+					d();
+				});
+			});
+		});
+	});
+
 });

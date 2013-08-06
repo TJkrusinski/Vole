@@ -115,6 +115,7 @@ exports.connect = function(port, host, opts) {
  */
 exports.setTTL = function(ttl) {
 	EXPIRE = ttl || EXPIRE;
+	if (ttl == 0) EXPIRE = 0;
 	return EXPIRE;
 };
 
@@ -142,8 +143,8 @@ exports.set = function(key, val, ttl, cb) {
 	var usettl = false;
 
 	if (ttl && !cb && type(ttl) === 'Function') cb = ttl;
-	if (type(ttl) === 'Number') usettl = true;
-	
+	if (type(ttl) === 'Number' || ttl == 0) usettl = true;
+
 	if (!key || !val)
 		return cb ? cb(true, 'Set requires a key and a val') : false;
 
@@ -165,7 +166,10 @@ exports.set = function(key, val, ttl, cb) {
 		return cb ? cb(false, null) : true;
 	});
 
-	client.expire(key, usettl ? ttl : EXPIRE);
+	// user did not set a ttl of 0 and EXPIRE is truthy
+	if (!(usettl && ttl == 0) && EXPIRE) {
+		client.expire(key, usettl ? ttl : EXPIRE);
+	};
 };
 
 /**
