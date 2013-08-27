@@ -53,11 +53,6 @@ exports.enableConsoleLogging = function() {
 exports.disableConsoleLogging = function() {
 	logging.toConsole(false);
 };
-
-/**
- *	Log to a file
- */
-exports.logToFile = logging.logToFile;
 	
 /**
  *	Connect to the redis instance
@@ -167,6 +162,7 @@ exports.set = function(key, val, ttl, cb) {
 	});
 
 	// user did not set a ttl of 0 and EXPIRE is truthy
+	// if EXPIRE is set to 0, it will override any ttl
 	if (!(usettl && ttl == 0) && EXPIRE) {
 		client.expire(key, usettl ? ttl : EXPIRE);
 	};

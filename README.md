@@ -80,21 +80,6 @@ vole.bust(key);
 
 
 /**
- *	Log Vole information to disk as JSON
- *	@method logToFile
- *	@pararm {String} filePath
- */
-vole.logToFile(filePath);
-
-// logs
-{"hit":true,"key":"foo","size":13,"time":1369065558590,"level":"info","message":"","timestamp":"2013-05-20T15:59:18.590Z"}
-{"hit":false,"key":"foo2","size":0,"time":1369065559595,"level":"info","message":"","timestamp":"2013-05-20T15:59:19.596Z"}
-{"hit":true,"key":"foo4","size":14,"time":1369065559598,"level":"info","message":"","timestamp":"2013-05-20T15:59:19.598Z"}
-{"hit":true,"key":["foo3","foo4"],"size":31,"time":1369065559598,"level":"info","message":"","timestamp":"2013-05-20T15:59:19.598Z"}
-{"hit":false,"key":"foo3","size":0,"time":1369065559600,"level":"info","message":"","timestamp":"2013-05-20T15:59:19.600Z"}
-
-
-/**
  *	Log Vole information to the console	
  *	@method enableConsoleLogging
  */
