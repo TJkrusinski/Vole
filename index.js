@@ -4,6 +4,7 @@ var logging = require(__dirname+'/lib/logging.js'),
 	redis = require('redis'),
 	events = require('events'),
 	client,
+	offline = true,
 	EXPIRE = 60 * 60;
 
 /**
@@ -77,6 +78,7 @@ exports.connect = function(port, host, opts) {
 	 *	Tell the client that redis is connected
 	 */
 	client.on('ready', function(){
+		offline = false;
 		exports.emit('ready');
 	});
 
@@ -84,6 +86,7 @@ exports.connect = function(port, host, opts) {
 	 *	Tell the client there was an issue
 	 */
 	client.on('error', function(e){
+		offline = true;
 		exports.emit('error', e);
 	});
 
@@ -91,6 +94,7 @@ exports.connect = function(port, host, opts) {
 	 *	Tell the client that vole is connected
 	 */
 	client.on('connect', function(e){
+		offline = false;
 		exports.emit('connect', e);
 	});
 	
@@ -98,6 +102,7 @@ exports.connect = function(port, host, opts) {
 	 *	When the connection closes, tell someone
 	 */
 	client.on('end', function(e){
+		offline = true;
 		exports.emit('end', e);
 	});
 
@@ -140,6 +145,8 @@ exports.set = function(key, val, ttl, cb) {
 	if (ttl && !cb && type(ttl) === 'Function') cb = ttl;
 	if (type(ttl) === 'Number' || ttl == 0) usettl = true;
 
+	if (offline) return cb(false, null);
+
 	if (!key || !val)
 		return cb ? cb(true, 'Set requires a key and a val') : false;
 
@@ -177,8 +184,13 @@ exports.get = function(key, cb) {
 	if (!key) return cb(true, 'No key specified');
 	if (!cb) return; // k bye
 
+	if (offline) return cb(false, null);
 	if (type(key) === 'Array') multiGet(key, cb);
 	if (type(key) === 'String') singleGet(key, cb);
+};
+
+function noop () {
+	
 };
 
 /**
@@ -188,6 +200,7 @@ exports.get = function(key, cb) {
  *	@param {Function} cb
  */
 exports.bust = function(key, cb) {
+	if (offline) return cb ? cb(false, null) : noop();
 	key = key instanceof Array ? key : [key];
 	client.send_command('DEL', key, cb);
 };
