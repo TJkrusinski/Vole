@@ -145,7 +145,7 @@ exports.set = function(key, val, ttl, cb) {
 	if (ttl && !cb && type(ttl) === 'Function') cb = ttl;
 	if (type(ttl) === 'Number' || ttl == 0) usettl = true;
 
-	if (offline) return cb(false, null);
+	if (offline) return cb ? cb(false, null) : null;
 
 	if (!key || !val)
 		return cb ? cb(true, 'Set requires a key and a val') : false;
