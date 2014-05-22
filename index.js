@@ -202,7 +202,7 @@ function noop () {
 exports.bust = function(key, cb) {
 	if (offline) return cb ? cb(false, null) : noop();
 	key = key instanceof Array ? key : [key];
-	client.send_command('DEL', key, cb);
+	client.send_command('DEL', key, cb || noop);
 };
 
 
