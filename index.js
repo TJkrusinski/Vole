@@ -152,10 +152,11 @@ exports.setTTL = function(ttl) {
  */
 
 exports.auth = function(pass, cb) {
+  cb = cb || noop;
   if (!pass) return;
 
   client.auth(pass, function(){
-    if (cb) return cb();
+    return cb();
   });
 };
 
@@ -173,29 +174,28 @@ exports.set = function(key, val, ttl, cb) {
   if (ttl && !cb && type(ttl) === 'Function') cb = ttl;
   if (type(ttl) === 'Number' || ttl == 0) usettl = true;
 
-  if (offline) return cb ? cb(false, null) : null;
+  cb = cb || noop;
 
-  if (!key || !val)
-    return cb ? cb(true, 'Set requires a key and a val') : false;
+  if (offline) return cb(false, null);
+  if (!key || !val) return cb(true, 'Set requires a key and a val');
 
   /**
    *  `key` must be String
    */
 
-  if (type(key) !== 'String')
-    return cb ? cb(true, 'Keys must be a String') : false;
+  if (type(key) !== 'String') return cb(true, 'Keys must be a String');
 
   /**
    *  `val` must be Object
    */
 
   if (type(val) !== 'Object' && type(val) !== 'Array')
-    return cb ? cb(true, 'Val must be an object or an array') : false;
+    return cb(true, 'Val must be an object or an array');
 
   client.set(key, toString(val), function(err){
-    if (err) return cb ? cb(true, null) : false;
+    if (err) return cb(true, null);
     if (!err) exports.emit('set', key, toString(val));
-    return cb ? cb(false, null) : true;
+    return cb(false, null);
   });
 
   // user did not set a ttl of 0 and EXPIRE is truthy
@@ -230,9 +230,10 @@ exports.get = function(key, cb) {
  */
 
 exports.bust = function(key, cb) {
-  if (offline) return cb ? cb(false, null) : noop();
+  cb = cb || noop;
+  if (offline) return cb(false, null);
   key = key instanceof Array ? key : [key];
-  client.send_command('DEL', key, cb || noop);
+  client.send_command('DEL', key, cb);
 };
 
 
