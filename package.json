@@ -18,7 +18,7 @@
 	"string"
   ],
   "author": "TJ Krusinski",
-  "license": "BSD",
+  "license": "MIT",
   "dependencies": {
     "chai": "~1.6.0",
     "redis": "~0.8.3",
