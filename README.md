@@ -10,7 +10,7 @@ A very simple Redis backed key/value cache for Node.js.
 
 ## API
 
-```
+```javascript
 
 var vole = require('vole');
 
@@ -121,7 +121,7 @@ Emitted when a connection to Redis has closed.
 
 ## Examples
 
-```
+```javascript
 
 var vole = require('vole').connect();
 
